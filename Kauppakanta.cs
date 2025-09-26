@@ -22,5 +22,18 @@ class Kauppakanta
         }
     }
 
-    
+    //Metodi, jolla lisätään asiakas tietokantaan
+    public void LisaaAsiakas(string nimi)
+    {
+        using (var connection = new SqliteConnection(_connectionString))
+        {
+            connection.Open();
+
+            //Lisätään asiakas tietokantaan
+            var insertCmd = connection.CreateCommand();
+            insertCmd.CommandText = @"INSERT INTO Asiakkaat (nimi) VALUES ($nimi)";
+            insertCmd.Parameters.AddWithValue("$nimi", nimi);
+            insertCmd.ExecuteNonQuery();
+        }
+    }
 }
