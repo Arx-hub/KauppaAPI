@@ -36,4 +36,25 @@ class Kauppakanta
             insertCmd.ExecuteNonQuery();
         }
     }
+
+    public Dictionary<int, string> HaeAsiakkaat()
+    {
+        using (var connection = new SqliteConnection(_connectionString))
+        {
+            connection.Open();
+
+            //Haetaan kaikki asiakkaat tietokannasta
+            var selectCmd = connection.CreateCommand();
+            selectCmd.CommandText = "SELECT * FROM Asiakkaat";
+
+            using (var reader = selectCmd.ExecuteReader())
+            {
+                var asiakkaat = new Dictionary<int, string>();
+                while (reader.Read())
+                {
+                    asiakkaat.Add(reader.GetInt32(0), reader.GetString(1));
+                }
+            }
+        }
+    }
 }
