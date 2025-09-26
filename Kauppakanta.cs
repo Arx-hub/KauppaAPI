@@ -2,6 +2,8 @@ using Microsoft.Data.Sqlite;
 
 namespace KauppaAPI;
 
+public record Asiakas (int Id, string Nimi);
+
 class Kauppakanta
 {
     //Tietokantayhteyttä _connectionString
@@ -54,6 +56,7 @@ class Kauppakanta
                 {
                     asiakkaat.Add(reader.GetInt32(0), reader.GetString(1));
                 }
+                return asiakkaat;
             }
         }
     }
