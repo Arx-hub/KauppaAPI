@@ -1,0 +1,26 @@
+using Microsoft.Data.Sqlite;
+
+namespace KauppaAPI;
+
+class Kauppakanta
+{
+    //Tietokantayhteyttä _connectionString
+    private static string _connectionString = "Data Source=kauppa.db";
+
+    //rakentaja
+    public Kauppakanta()
+    {
+        //Luodaan tietokantayhteys
+        using (var connection = new SqliteConnection(_connectionString))
+        {
+            connection.Open();
+
+            //Luodaan Asiakkaat-taulu, jos sitä ei ole
+            var tableCmd = connection.CreateCommand();
+            tableCmd.CommandText = @"CREATE TABLE IF NOT EXISTS Asiakkaat (id INTEGER PRIMARY KEY, nimi TEXT)";
+            tableCmd.ExecuteNonQuery();
+        }
+    }
+
+    
+}
